@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:notes_app/screens/add_note_screen.dart';
 import 'package:notes_app/widgets/notes_list_widget.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -11,33 +12,24 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  var selectedIndex = 0;
+  Widget screen = NotesListWidget();
   @override
   Widget build(BuildContext context) {
-    Widget screen;
-    switch(selectedIndex) {
-      case 0:
-        screen = NotesListWidget();
-      default:
-        screen = NotesListWidget();
-    }
-    return Scaffold(
+    return MaterialApp(
+      title: '',
+      home: Scaffold(
+      appBar: AppBar(title: const Text('Notes App'),),
       body: screen,
-      bottomNavigationBar: 
-        NavigationBar(
-          backgroundColor: Colors.white,
-          destinations: const <Widget> [
-            NavigationDestination(icon: Icon(Icons.home_outlined), selectedIcon: Icon(Icons.home), label: '',),
-            NavigationDestination(icon: Icon(Icons.search_outlined), selectedIcon: Icon(Icons.search_sharp), label: ''),
-            NavigationDestination(icon: Icon(Icons.edit_note_outlined), selectedIcon: Icon(Icons.edit_note_sharp), label: ''),
-          ],
-          selectedIndex: selectedIndex,
-          onDestinationSelected: (value) {
-            setState(() {
-              selectedIndex = value;
-            });
-          } ,
-          ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context, 
+            MaterialPageRoute(builder: (context) => AddNoteScreen())
+            );
+        },
+        child: const Icon(Icons.add_outlined),
+        ),
+    ),
     );
   }
 

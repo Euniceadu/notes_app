@@ -7,7 +7,6 @@ class NotesListWidget  extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // var appState = context.watch<MyAppState>();
     List<Note> notes = [
       Note(title: "Note 1", content: "Hello World"),
       Note(title: "Grocery List", content: "Bread \n Eggs")
