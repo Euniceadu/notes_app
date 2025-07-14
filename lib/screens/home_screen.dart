@@ -22,7 +22,14 @@ class _HomeScreenState extends State<HomeScreen> {
     return MaterialApp(
       title: '',
       home: Scaffold(
-      appBar: AppBar(title: const Text('Notes App'),),
+      appBar: AppBar(
+        title: TextField(
+          decoration: InputDecoration(
+            hintText: 'Search Notes...',
+            border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(15)))
+          ),
+        )
+      ),
       body: ListView(
         children: [
           for(var item in noteList)
