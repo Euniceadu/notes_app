@@ -1,5 +1,5 @@
 class Note {
-  int? id;
+  String? id;
   final String title;
   final String content;
   final DateTime dateCreated;
@@ -11,18 +11,18 @@ class Note {
     DateTime? dateCreated
     }) : dateCreated = dateCreated ?? DateTime.now();
 
-  Note copyWith({
-    int? id, 
-    String? title,
-    String? content,
-    DateTime? dateCreated,
-  }) {
-    return Note(
-      id: id ?? this.id, 
-      title: title ?? this.title, 
-      content: content ?? this.content,
-      dateCreated: dateCreated ?? this.dateCreated
-    );
-  }
+  // Note copyWith({
+  //   String? id, 
+  //   String? title,
+  //   String? content,
+  //   DateTime? dateCreated,
+  // }) {
+  //   return Note(
+  //     id: id ?? this.id, 
+  //     title: title ?? this.title, 
+  //     content: content ?? this.content,
+  //     dateCreated: dateCreated ?? this.dateCreated
+  //   );
+  // }
   
 }

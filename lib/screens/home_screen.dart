@@ -1,9 +1,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:notes_app/controllers/add_edit_note_controller.dart';
+import 'package:notes_app/providers/note_provider.dart';
 import 'package:notes_app/screens/add_edit_note_screen.dart';
 import 'package:provider/provider.dart';
-import '../models/note.dart';
 
 class HomeScreen extends StatefulWidget {
 
@@ -14,19 +14,18 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<Note> notes = [
-    Note(id: 1, title: "Note 1", content: "Hello World"),
-    Note(id: 2, title: "Grocery List", content: "Bread \n Eggs")
-  ];
   @override
   Widget build(BuildContext context) {
+
+    var noteList = context.watch<NoteProvider>().getNotes();
+
     return MaterialApp(
       title: '',
       home: Scaffold(
       appBar: AppBar(title: const Text('Notes App'),),
       body: ListView(
         children: [
-          for(var item in notes)
+          for(var item in noteList)
           ListTile(
             title: Text(item.title),
             onTap: () {

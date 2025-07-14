@@ -19,12 +19,6 @@ class AddEditNoteScreen extends StatefulWidget {
 
 class _AddEditNoteScreenState extends State<AddEditNoteScreen> {
 
-  // final titleController = TextEditingController();
-  // final contentController = TextEditingController();
-  
-
-  // int wordCount = 0;
-
   @override
   Widget build(BuildContext context) {
 
@@ -37,7 +31,10 @@ class _AddEditNoteScreenState extends State<AddEditNoteScreen> {
         actions: [
           IconButton(
             icon: Icon(Icons.save),
-            onPressed: () {}
+            onPressed: () {
+              controller.saveNote(context);
+              Navigator.pop(context);
+            }
           )
         ],
 
@@ -86,12 +83,6 @@ class _AddEditNoteScreenState extends State<AddEditNoteScreen> {
   
     );
   }
-
-  // void _getWordCount() {
-  //   setState(() {
-  //     wordCount = contentController.text.trim().split(' ').length;
-  //   });
-  // }
 
   @override
   void initState() {
