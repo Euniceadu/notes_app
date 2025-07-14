@@ -10,19 +10,5 @@ class Note {
     required this.content,
     DateTime? dateCreated
     }) : dateCreated = dateCreated ?? DateTime.now();
-
-  // Note copyWith({
-  //   String? id, 
-  //   String? title,
-  //   String? content,
-  //   DateTime? dateCreated,
-  // }) {
-  //   return Note(
-  //     id: id ?? this.id, 
-  //     title: title ?? this.title, 
-  //     content: content ?? this.content,
-  //     dateCreated: dateCreated ?? this.dateCreated
-  //   );
-  // }
   
 }
