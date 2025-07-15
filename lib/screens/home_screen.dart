@@ -14,10 +14,18 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+
+  String searchQuery = 'p';
+
   @override
   Widget build(BuildContext context) {
 
     var noteList = context.watch<NoteProvider>().getNotes();
+
+    var searchResults = noteList.where((element) {
+      return element.title.toLowerCase().contains(searchQuery.toLowerCase()) || 
+      element.content.toLowerCase().contains(searchQuery.toLowerCase());
+    },).toList();
 
     return MaterialApp(
       title: '',
@@ -28,11 +36,16 @@ class _HomeScreenState extends State<HomeScreen> {
             hintText: 'Search Notes...',
             border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(15)))
           ),
+          onChanged: (value) {
+            setState(() {
+              searchQuery = value;
+            });
+          },
         )
       ),
       body: ListView(
         children: [
-          for(var item in noteList)
+          for(var item in searchResults)
           ListTile(
             title: Text(item.title),
             onTap: () {
