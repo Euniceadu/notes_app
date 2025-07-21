@@ -21,7 +21,7 @@ class NoteProvider extends ChangeNotifier {
     return _notesStore[noteId];
   }
 
-  void deleteNote(String noteId) {
+  void deleteNote(String? noteId) {
     if(_notesStore.containsKey(noteId)) {
       _notesStore.remove(noteId);
       notifyListeners();
