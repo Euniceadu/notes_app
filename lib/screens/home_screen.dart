@@ -5,6 +5,7 @@ import 'package:notes_app/controllers/add_edit_note_controller.dart';
 import 'package:notes_app/providers/note_provider.dart';
 import 'package:notes_app/screens/add_edit_note_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:share_plus/share_plus.dart';
 
 class HomeScreen extends StatefulWidget {
 
@@ -58,9 +59,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   backgroundColor: Colors.blueAccent,
                   foregroundColor: Colors.white,
                   onPressed:(context) {
-                    
+                    SharePlus.instance.share(
+                      ShareParams(title: item.title, text: '${item.title}\n\n${item.content}')
+                    );
                   },
-                  ),
+                ),
                 SlidableAction(
                   icon: Icons.archive_sharp,
                   backgroundColor: Colors.deepPurpleAccent,
@@ -68,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   onPressed:(context) {
                     
                   },
-                  ),
+                ),
                 SlidableAction(
                   icon: Icons.delete,
                   backgroundColor: Colors.redAccent,
