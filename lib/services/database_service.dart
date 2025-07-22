@@ -1,36 +1,52 @@
-// import '../models/note.dart';
+import 'package:path/path.dart';
 
-// class DatabaseService {
+import '../models/note.dart';
+import 'package:sqflite/sqflite.dart';
 
-//   static final Map<int, Note> _notesMap = {};
 
-//   static int _nextId = 0;
+class DatabaseService {
 
-//   void addNote(Note note) {
-//     note.id = _nextId;
-//     _notesMap[_nextId] = note;
-//     _nextId = _nextId + 1;
-//   }
 
-//   void updateNote(Note note) {
-//     // retrieve 
-//   }
+static final DatabaseService instance = DatabaseService._init();
 
-//   List<Note> getNotes() {
-//     return _notesMap.values.toList();
-//   }
+  static Database? _database;
+  final String _CREATE_QUERY = '''
+                CREATE TABLE notes(
+                  id TEXT PRIMARY KEY, 
+                  title TEXT NOT NULL, 
+                  content TEXT NOT NULL,
+                  dateCreated TEXT NOT NULL,
+                  dateUpdated TEXT NOT NULL
+                )''';
 
-//   Note getNote(int id) {
-//     if(_notesMap.containsKey(id)) {
-//       return _notesMap[id]!;
-//     }
-//     throw Error();
-//   }
+  DatabaseService._init();
 
-//   void deleteNote(int id) {
-//     if(_notesMap.containsKey(id)) {
-//       _notesMap.remove(id);
-//     }
-//   }
+  Future<Database> get database async {
+    if (_database != null) return _database!;
+    _database = await _initDB('notes.db');
+    return _database!;
+  }
 
-// }
+  Future<Database?> _initDB(String dbfileName) async {
+    var fullDBPath = join(await getDatabasesPath(), dbfileName);
+    return openDatabase(fullDBPath, 
+      version: 1, 
+      onCreate: (db, version) {
+
+        return db.execute(_CREATE_QUERY);
+      }
+    );
+  }
+
+  Future<void> createNote(Note note) async {
+    final database = await instance.database;
+    await database.insert('notes', note.toJson());
+  }
+
+  Future<List<Note>> getNotes() async {
+    final database = await instance.database;
+    final results = await database.query('notes', orderBy: 'dateCreated DESC');
+  return results.map((json) => Note.fromJson(json)).toList();
+  }
+
+}

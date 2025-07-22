@@ -37,7 +37,7 @@ class AddEditNoteController extends ChangeNotifier {
       id: noteId ?? UniqueKey().toString(),
       title: titleController.text.trim(), content: contentController.text.trim());
 
-    context.read<NoteProvider>().saveNote(note.id!, note);
+    context.read<NoteProvider>().saveNote(note);
   }
 
   @override

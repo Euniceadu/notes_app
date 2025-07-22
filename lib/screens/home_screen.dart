@@ -22,7 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
 
-    var noteList = context.watch<NoteProvider>().getNotes();
+    var noteList = context.watch<NoteProvider>().notes;
 
     var searchResults = noteList.where((element) {
       return element.title.toLowerCase().contains(searchQuery.toLowerCase()) || 
