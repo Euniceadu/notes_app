@@ -10,15 +10,19 @@ class AddEditNoteController extends ChangeNotifier {
   final contentController = TextEditingController();
   int wordCount = 0;
 
-  final String? noteId;
+  final Note? note;
 
   AddEditNoteController({
-    this.noteId,
-    String? title,
-    String? content
+    this.note
   }) {
-    titleController.text = title ?? '';
-    contentController.text = content ?? '';
+    if(note != null) {
+      titleController.text = note!.title;
+      contentController.text = note!.content;
+    } else {
+      titleController.text = '';
+      contentController.text = '';
+    }
+    
     calculateWordCount();
   }
 
@@ -33,11 +37,21 @@ class AddEditNoteController extends ChangeNotifier {
       return;
     }
 
-    Note note = Note(
-      id: noteId ?? UniqueKey().toString(),
-      title: titleController.text.trim(), content: contentController.text.trim());
+    if (note != null) {
+      Note updatedNote = Note(
+        id: note!.id,
+        title: titleController.text.trim(), 
+        content: contentController.text.trim(),
+        dateCreated: note!.dateCreated);
+      context.read<NoteProvider>().updateNote(updatedNote);
+    } else {
+      Note newNote = Note(
+        id: UniqueKey().toString(),
+        title: titleController.text.trim(), 
+        content: contentController.text.trim());
+      context.read<NoteProvider>().saveNote(newNote);
+    }
 
-    context.read<NoteProvider>().saveNote(note);
   }
 
   @override

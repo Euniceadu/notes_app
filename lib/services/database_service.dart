@@ -10,7 +10,7 @@ class DatabaseService {
 static final DatabaseService instance = DatabaseService._init();
 
   static Database? _database;
-  final String _CREATE_QUERY = '''
+  static const String _createQuery = '''
                 CREATE TABLE notes(
                   id TEXT PRIMARY KEY, 
                   title TEXT NOT NULL, 
@@ -33,7 +33,7 @@ static final DatabaseService instance = DatabaseService._init();
       version: 1, 
       onCreate: (db, version) {
 
-        return db.execute(_CREATE_QUERY);
+        return db.execute(_createQuery);
       }
     );
   }
@@ -43,10 +43,20 @@ static final DatabaseService instance = DatabaseService._init();
     await database.insert('notes', note.toJson());
   }
 
+  Future<void> updateNote(Note note) async {
+    final database = await instance.database;
+    await database.update('notes', note.toJson(), where: 'id = ?', whereArgs: [note.id]);
+  }
+
   Future<List<Note>> getNotes() async {
     final database = await instance.database;
     final results = await database.query('notes', orderBy: 'dateCreated DESC');
-  return results.map((json) => Note.fromJson(json)).toList();
+    return results.map((json) => Note.fromJson(json)).toList();
+  }
+
+  Future<void> deleteNote(String noteId) async {
+    final database = await instance.database;
+    await database.delete('notes', where: 'id = ?', whereArgs: [noteId]);
   }
 
 }

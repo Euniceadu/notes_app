@@ -104,7 +104,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     );
                   
                     if(confirmDelete == true) {
-                      noteProvider.deleteNote(item.id);
+                      noteProvider.deleteNote(item.id!);
                       scaffoldMessenger.showSnackBar(SnackBar(content: Text('Note deleted successfully')));
                     }
 
@@ -119,11 +119,7 @@ class _HomeScreenState extends State<HomeScreen> {
               context, 
               MaterialPageRoute(
                 builder: (_) => ChangeNotifierProvider(
-                  create: (_) => AddEditNoteController(
-                    noteId: item.id,
-                    title: item.title,
-                    content: item.content
-                  ),
+                  create: (_) => AddEditNoteController(note: item),
                   child: AddEditNoteScreen()
                   ),
               )
