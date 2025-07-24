@@ -69,7 +69,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   backgroundColor: Colors.deepPurpleAccent,
                   foregroundColor: Colors.white,
                   onPressed:(context) {
-                    
+                    context.read<NoteProvider>().archiveNote(item);
                   },
                 ),
                 SlidableAction(

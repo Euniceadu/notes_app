@@ -15,6 +15,7 @@ static final DatabaseService instance = DatabaseService._init();
                   id TEXT PRIMARY KEY, 
                   title TEXT NOT NULL, 
                   content TEXT NOT NULL,
+                  isArchived INTEGER NOT NULL,
                   dateCreated TEXT NOT NULL,
                   dateUpdated TEXT NOT NULL
                 )''';
@@ -50,7 +51,7 @@ static final DatabaseService instance = DatabaseService._init();
 
   Future<List<Note>> getNotes() async {
     final database = await instance.database;
-    final results = await database.query('notes', orderBy: 'dateCreated DESC');
+    final results = await database.query('notes', where: 'isArchived = 0', orderBy: 'dateCreated DESC');
     return results.map((json) => Note.fromJson(json)).toList();
   }
 

@@ -19,6 +19,12 @@ class NoteProvider extends ChangeNotifier {
     await getNotes();
   }
 
+  Future<void> archiveNote(Note note) async {
+    final archivedNote = _notes.where((item) => item.id == note.id).first.copyWith(isArchived : true, dateUpdated: DateTime.now());
+    await DatabaseService.instance.updateNote(archivedNote);
+    await getNotes();
+  }
+
 
   Future<void> getNotes() async {
     _notes = await DatabaseService.instance.getNotes();
